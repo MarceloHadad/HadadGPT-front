@@ -17,7 +17,27 @@ function App() {
     },
   ]);
 
-  async function handleSubmit(event) {}
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    let response = await makeRequest({ prompt: input });
+
+    response = response.data.split("\n").map((line) => <p>{line}</p>);
+
+    setChatLog([
+      ...chatLog,
+      {
+        user: "me",
+        message: `${input}`,
+      },
+      {
+        user: "gpt",
+        message: response,
+      },
+    ]);
+
+    setInput("");
+  }
 
   return (
     <div className="App">
